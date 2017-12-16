@@ -1,0 +1,5 @@
+experiments/
+data/*.txt
+*.pyc
+*.txt
+*.pkl
