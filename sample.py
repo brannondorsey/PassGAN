@@ -1,59 +1,84 @@
+import os
+import time
+import pickle
+import argparse
+
 import tensorflow as tf
 import numpy as np
 import tflib as lib
 import tflib.ops.linear
 import tflib.ops.conv1d
-import utils.utils
+import utils
+import models
 
-OUTPUT=10e8
-BATCH_SIZE=64
-SEQ_LEN = 10 # Sequence length in characters
-DIM = 128 # Model dimensionality. This is fairly slow and overfits, even on
-          # Billion Word. Consider decreasing for smaller datasets.
+def parse_args():
+    parser = argparse.ArgumentParser()
 
-def make_noise(shape):
-    return tf.random_normal(shape)
+    parser.add_argument('--input-dir', '-i',
+                        required=True,
+                        dest='input_dir',
+                        help='Trained model directory. The --output-dir value used for training.')
 
-def softmax(logits):
-    return tf.reshape(
-        tf.nn.softmax(
-            tf.reshape(logits, [-1, len(charmap)])
-        ),
-        tf.shape(logits)
-    )
+    parser.add_argument('--checkpoint', '-c',
+                        required=True,
+                        dest='checkpoint',
+                        help='Model checkpoint to use for sampling. Expects a .ckpt file.')
 
-def ResBlock(name, inputs):
-    output = inputs
-    output = tf.nn.relu(output)
-    output = lib.ops.conv1d.Conv1D(name+'.1', DIM, DIM, 5, output)
-    output = tf.nn.relu(output)
-    output = lib.ops.conv1d.Conv1D(name+'.2', DIM, DIM, 5, output)
-    return inputs + (0.3*output)
+    parser.add_argument('--output', '-o',
+                        default='samples.txt',
+                        help='File path to save generated samples to (default: samples.txt)')
 
-def Generator(n_samples, prev_outputs=None):
-    output = make_noise(shape=[n_samples, 128])
-    output = lib.ops.linear.Linear('Generator.Input', 128, SEQ_LEN*DIM, output)
-    output = tf.reshape(output, [-1, DIM, SEQ_LEN])
-    output = ResBlock('Generator.1', output)
-    output = ResBlock('Generator.2', output)
-    output = ResBlock('Generator.3', output)
-    output = ResBlock('Generator.4', output)
-    output = ResBlock('Generator.5', output)
-    output = lib.ops.conv1d.Conv1D('Generator.Output', DIM, len(charmap), 1, output)
-    output = tf.transpose(output, [0, 2, 1])
-    output = softmax(output)
-    return output
+    parser.add_argument('--num-samples', '-n',
+                        type=int,
+                        default=1000000,
+                        dest='num_samples',
+                        help='The number of password samples to generate (default: 1000000)')
 
-lines, charmap, inv_charmap = utils.load_dataset(
-    path='data/train.txt',
-    max_length=SEQ_LEN
-)
+    parser.add_argument('--batch-size', '-b',
+                        type=int,
+                        default=64,
+                        dest='batch_size',
+                        help='Batch size (default: 64).')
+    
+    parser.add_argument('--seq-length', '-l',
+                        type=int,
+                        default=10,
+                        dest='seq_length',
+                        help='The maximum password length. Use the same value that you did for training. (default: 10)')
+    
+    parser.add_argument('--layer-dim', '-d',
+                        type=int,
+                        default=128,
+                        dest='layer_dim',
+                        help='The hidden layer dimensionality for the generator. Use the same value that you did for training (default: 128)')
+    
+    args = parser.parse_args()
 
-fake_inputs = Generator(BATCH_SIZE)
+    if not os.path.isdir(args.input_dir):
+        parser.error('"{}" folder doesn\'t exist'.format(args.input_dir))
+
+    if not os.path.exists(args.checkpoint + '.meta'):
+        parser.error('"{}.meta" file doesn\'t exist'.format(args.checkpoint))
+
+    if not os.path.exists(os.path.join(args.input_dir, 'charmap.pickle')):
+        parser.error('charmap.pickle doesn\'t exist in {}, are you sure that directory is a trained model directory'.format(args.input_dir))
+
+    if not os.path.exists(os.path.join(args.input_dir, 'inv_charmap.pickle')):
+        parser.error('inv_charmap.pickle doesn\'t exist in {}, are you sure that directory is a trained model directory'.format(args.input_dir))
+
+    return args
+
+args = parse_args()
+
+with open(os.path.join(args.input_dir, 'charmap.pickle'), 'rb') as f:
+    charmap = pickle.load(f)
+
+with open(os.path.join(args.input_dir, 'inv_charmap.pickle'), 'rb') as f:
+    inv_charmap = pickle.load(f)
+
+fake_inputs = models.Generator(args.batch_size, args.seq_length, args.layer_dim, len(charmap))
 
 with tf.Session() as session:
-
-    session.run(tf.initialize_all_variables())
 
     def generate_samples():
         samples = session.run(fake_inputs)
@@ -66,16 +91,30 @@ with tf.Session() as session:
             decoded_samples.append(tuple(decoded))
         return decoded_samples
 
+    def save(samples):
+        with open(args.output, 'a') as f:
+                for s in samples:
+                    s = "".join(s).replace('`', '')
+                    f.write(s + "\n")
 
     saver = tf.train.Saver()
-    saver.restore(session, 'experiments/paper/checkpoints/195000.ckpt')
+    saver.restore(session, args.checkpoint)
 
     samples = []
-    for i in xrange(int(OUTPUT/BATCH_SIZE)):
-        if i % 1000 == 0: print(i * BATCH_SIZE)
+    then = time.time()
+    start = time.time()
+    for i in xrange(int(args.num_samples / args.batch_size)):
+        
         samples.extend(generate_samples())
 
-    with open('samples2.txt', 'w') as f:
-        for s in samples:
-            s = "".join(s).replace('`', '')
-            f.write(s + "\n")
+        # append to output file every 1000 batches
+        if i % 1000 == 0 and i > 0: 
+            
+            save(samples)
+            samples = [] # flush
+
+            print('wrote {} samples to {} in {:.2f} seconds. {} total.'.format(1000 * args.batch_size, 'samples.txt', time.time() - then, i * args.batch_size))
+            then = time.time()
+    
+    save(samples)
+    print('finished in {:.2f} seconds'.format(time.time() - start))

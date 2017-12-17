@@ -86,9 +86,7 @@ class NgramLanguageModel(object):
         return 0.5*(kl_p_m + kl_q_m) / np.log(2)
 
 def load_dataset(path, max_length, tokenize=False, max_vocab_size=2048):
-
-    print "loading data/train.txt..."
-
+    
     lines = []
 
     with open(path, 'r') as f:
@@ -129,8 +127,8 @@ def load_dataset(path, max_length, tokenize=False, max_vocab_size=2048):
                 filtered_line.append('unk')
         filtered_lines.append(tuple(filtered_line))
 
-    for i in xrange(100):
-        print filtered_lines[i]
+    # for i in xrange(100):
+    #     print filtered_lines[i]
 
     print "loaded {} lines in dataset".format(len(lines))
     return filtered_lines, charmap, inv_charmap

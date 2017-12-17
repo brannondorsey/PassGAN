@@ -3,3 +3,4 @@ data/*.txt
 *.pyc
 *.txt
 *.pkl
+.ipynb_checkpoints
