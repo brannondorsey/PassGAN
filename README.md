@@ -5,7 +5,7 @@ This repository contains code for the [_PassGAN: A Deep Learning Approach for Pa
 The model from PassGAN is taken from [_Improved Training of Wasserstein GANs_](https://arxiv.org/abs/1704.00028) and it is assumed that the authors of PassGAN used the [improved_wgan_training](https://github.com/igul222/improved_wgan_training) tensorflow implementation in their work. For this reason, I have modified that reference implementation in this repository to make it easy to train (`train.py`) and sample (`sample.py`) from. This repo contributes:
 
 - A command-line interface
-- A pretrained PassGAN models trained on the RockYou dataset
+- A pretrained PassGAN model trained on the RockYou dataset
 
 ## Getting Started
 
@@ -52,5 +52,6 @@ You are encouraged to train using your own password leaks and datasets. Some gre
 
 This code is released under an [MIT License](https://github.com/igul222/improved_wgan_training/blob/master/LICENSE). You are free to use, modify, distribute, or sell it under those terms. 
 
-The majority of the credit for this repository goes to @igul222 for his work on the [improved_wgan_training](https://github.com/igul222/improved_wgan_training). I've simply modularized his code a bit, added a command-line interface, and specialized it for the PassGAN paper.
+The majority of the credit for the code in this repository goes to @igul222 for his work on the [improved_wgan_training](https://github.com/igul222/improved_wgan_training). I've simply modularized his code a bit, added a command-line interface, and specialized it for the PassGAN paper.
 
+The PassGAN [research and paper](https://arxiv.org/abs/1709.00440) was published by Briland Hitaj, Paolo Gasti, Giuseppe Ateniese, Fernando Perez-Cruz.
