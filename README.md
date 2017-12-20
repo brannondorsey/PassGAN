@@ -44,6 +44,13 @@ python train.py --output-dir output --training-data data/train.txt
 
 You are encouraged to train using your own password leaks and datasets. Some great places to find those include:
 
-- [LinkedIn leak](https://hashes.org/download.php?hashlistId=68&type=hfound)(2.9GB, direct download)
+- [LinkedIn leak](https://hashes.org/download.php?hashlistId=68&type=hfound) (2.9GB, direct download)
 - [Exploit.in torrent](https://thepiratebay.org/torrent/16016494/exploit.in) (10GB+, 800 million accounts. Infamous!)
 - [Hashes.org](https://hashes.org/leaks.php): a shared password recovery site.
+
+## Attribution and License
+
+This code is released under an [MIT License](https://github.com/igul222/improved_wgan_training/blob/master/LICENSE). You are free to use, modify, distribute, or sell it under those terms. 
+
+The majority of the credit for this repository goes to @igul222 for his work on the [improved_wgan_training](https://github.com/igul222/improved_wgan_training). I've simply modularized his code a bit, added a command-line interface, and specialized it for the PassGAN paper.
+
