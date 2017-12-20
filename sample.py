@@ -113,7 +113,7 @@ with tf.Session() as session:
             save(samples)
             samples = [] # flush
 
-            print('wrote {} samples to {} in {:.2f} seconds. {} total.'.format(1000 * args.batch_size, 'samples.txt', time.time() - then, i * args.batch_size))
+            print('wrote {} samples to {} in {:.2f} seconds. {} total.'.format(1000 * args.batch_size, args.output, time.time() - then, i * args.batch_size))
             then = time.time()
     
     save(samples)

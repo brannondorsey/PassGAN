@@ -20,7 +20,7 @@ def parse_args():
     parser.add_argument('--training-data', '-i',
                         default='data/train.txt',
                         dest='training_data',
-                        help='Path to training data file (one password per line) (default: data/train.py)')
+                        help='Path to training data file (one password per line) (default: data/train.txt)')
 
     parser.add_argument('--output-dir', '-o',
                         required=True,

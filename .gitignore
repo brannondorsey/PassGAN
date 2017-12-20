@@ -1,4 +1,5 @@
 experiments/
+venv/
 data/*.txt
 *.pyc
 *.txt
