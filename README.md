@@ -48,6 +48,12 @@ You are encouraged to train using your own password leaks and datasets. Some gre
 - [Exploit.in torrent](https://thepiratebay.org/torrent/16016494/exploit.in) (10GB+, 800 million accounts. Infamous!)
 - [Hashes.org](https://hashes.org/leaks.php): a shared password recovery site.
 
+## Results
+
+I've yet to do an exhaustive analysis of my attempt to reproduce the results from the PassGAN paper. However, using the pretrained rockyou model to generate 10⁸ password samples I was able to match 630,347 (23.97%) unique passwords in the test data, using a 80%/20% train/test split.
+
+In general, I am somewhat surprised (and dissapointed) that the authors of PassGAN referenced [prior work](https://www.usenix.org/system/files/conference/usenixsecurity16/sec16_paper_melicher.pdf) in the ML password generation domain but did not compare their results to that research. My initial experience with PassGAN leads me to believe that it would significantly underperform both the RNN and Markov-based approaches mentioned in that paper and I hope that it is not for this reason that the authors have chosen not to compare results.
+
 ## Attribution and License
 
 This code is released under an [MIT License](https://github.com/igul222/improved_wgan_training/blob/master/LICENSE). You are free to use, modify, distribute, or sell it under those terms. 
