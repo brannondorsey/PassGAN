@@ -1,6 +1,12 @@
+from __future__ import print_function
 import collections
 import numpy as np
 import re
+
+try:
+    xrange = xrange
+except NameError:
+    xrange = range
 
 def tokenize_string(sample):
     return tuple(sample.lower().split(' '))
@@ -130,5 +136,5 @@ def load_dataset(path, max_length, tokenize=False, max_vocab_size=2048):
     # for i in xrange(100):
     #     print filtered_lines[i]
 
-    print "loaded {} lines in dataset".format(len(lines))
+    print("loaded {} lines in dataset".format(len(lines)))
     return filtered_lines, charmap, inv_charmap

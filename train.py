@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os, sys
 sys.path.append(os.getcwd())
 
@@ -13,6 +14,7 @@ import tflib.ops.linear
 import tflib.ops.conv1d
 import tflib.plot
 import models
+from utils import xrange
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -141,7 +143,7 @@ def inf_train_gen():
 true_char_ngram_lms = [utils.NgramLanguageModel(i+1, lines[10*args.batch_size:], tokenize=False) for i in xrange(4)]
 validation_char_ngram_lms = [utils.NgramLanguageModel(i+1, lines[:10*args.batch_size], tokenize=False) for i in xrange(4)]
 for i in xrange(4):
-    print "validation set JSD for n={}: {}".format(i+1, true_char_ngram_lms[i].js_with(validation_char_ngram_lms[i]))
+    print("validation set JSD for n={}: {}".format(i+1, true_char_ngram_lms[i].js_with(validation_char_ngram_lms[i])))
 true_char_ngram_lms = [utils.NgramLanguageModel(i+1, lines, tokenize=False) for i in xrange(4)]
 
 with tf.Session() as session:
@@ -170,7 +172,7 @@ with tf.Session() as session:
 
         # Train critic
         for i in xrange(args.critic_iters):
-            _data = gen.next()
+            _data = next(gen)
             _disc_cost, _ = session.run(
                 [disc_cost, disc_train_op],
                 feed_dict={real_inputs_discrete:_data}

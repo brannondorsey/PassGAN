@@ -1,9 +1,11 @@
+from __future__ import print_function
 import numpy
 
 import os
 import urllib
 import gzip
 import cPickle as pickle
+from ..utils import xrange
 
 def mnist_generator(data, batch_size, n_labelled, limit=None):
     images, targets = data
@@ -13,7 +15,7 @@ def mnist_generator(data, batch_size, n_labelled, limit=None):
     numpy.random.set_state(rng_state)
     numpy.random.shuffle(targets)
     if limit is not None:
-        print "WARNING ONLY FIRST {} MNIST DIGITS".format(limit)
+        print("WARNING ONLY FIRST {} MNIST DIGITS".format(limit))
         images = images.astype('float32')[:limit]
         targets = targets.astype('int32')[:limit]
     if n_labelled is not None:
@@ -51,7 +53,7 @@ def load(batch_size, test_batch_size, n_labelled=None):
     url = 'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
 
     if not os.path.isfile(filepath):
-        print "Couldn't find MNIST dataset in /tmp, downloading..."
+        print("Couldn't find MNIST dataset in /tmp, downloading...")
         urllib.urlretrieve(url, filepath)
 
     with gzip.open('/tmp/mnist.pkl.gz', 'rb') as f:

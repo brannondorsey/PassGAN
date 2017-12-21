@@ -1,3 +1,4 @@
+from __future__ import print_function
 # utility script that creates the full rockyou leak using the word count
 # redirect this output to a file to save it. Once you do that it is recommended
 # to 'sort -R' to randomize it.

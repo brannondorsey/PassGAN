@@ -3,6 +3,8 @@ import tflib as lib
 import numpy as np
 import tensorflow as tf
 
+from lib.utils import xrange
+
 _default_weightnorm = False
 def enable_default_weightnorm():
     global _default_weightnorm

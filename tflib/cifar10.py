@@ -4,6 +4,7 @@ import os
 import urllib
 import gzip
 import cPickle as pickle
+from ..utils import xrange
 
 def unpickle(file):
     fo = open(file, 'rb')

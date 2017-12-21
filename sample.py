@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import time
 import pickle
@@ -10,6 +11,7 @@ import tflib.ops.linear
 import tflib.ops.conv1d
 import utils
 import models
+from utils import xrange
 
 def parse_args():
     parser = argparse.ArgumentParser()
