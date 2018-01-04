@@ -44,9 +44,9 @@ python train.py --output-dir output --training-data data/train.txt
 
 You are encouraged to train using your own password leaks and datasets. Some great places to find those include:
 
-- [LinkedIn leak](https://hashes.org/download.php?hashlistId=68&type=hfound) (2.9GB, direct download)
+- [LinkedIn leak](https://github.com/brannondorsey/PassGAN/releases/download/data/68_linkedin_found_hash_plain.txt.zip) (1.7GB compressed, direct download. Mirror from [Hashes.org](https://hashes.org/leaks.php))
 - [Exploit.in torrent](https://thepiratebay.org/torrent/16016494/exploit.in) (10GB+, 800 million accounts. Infamous!)
-- [Hashes.org](https://hashes.org/leaks.php): a shared password recovery site.
+- [Hashes.org](https://hashes.org/leaks.php): Awesome shared password recovery site. Consider donating if you have the resources ;)
 
 ## Results
 
