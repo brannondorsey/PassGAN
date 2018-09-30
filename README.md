@@ -10,7 +10,7 @@ The model from PassGAN is taken from [_Improved Training of Wasserstein GANs_](h
 ## Getting Started
 
 ```bash
-# requires CUDA to be pre-installed
+# requires CUDA 8 to be pre-installed
 pip install -r requirements.txt
 ```
 
