@@ -46,7 +46,7 @@ You are encouraged to train using your own password leaks and datasets. Some gre
 
 - [LinkedIn leak](https://github.com/brannondorsey/PassGAN/releases/download/data/68_linkedin_found_hash_plain.txt.zip) (1.7GB compressed, direct download. Mirror from [Hashes.org](https://hashes.org/leaks.php))
 - [Exploit.in torrent](https://thepiratebay.org/torrent/16016494/exploit.in) (10GB+, 800 million accounts. Infamous!)
-- [Hashes.org](https://hashes.org/leaks.php): Awesome shared password recovery site. Consider donating if you have the resources ;)
+- [HashMob.net](https://hashmob.net/hashlists/official): Awesome shared password recovery site. Consider donating if you have the resources ;)
 
 ## Results
 
