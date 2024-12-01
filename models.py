@@ -46,4 +46,4 @@ def softmax(logits, num_classes):
     )
 
 def make_noise(shape):
-    return tf.random_normal(shape)
+    return tf.random.normal(shape)

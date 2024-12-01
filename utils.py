@@ -24,7 +24,7 @@ class NgramLanguageModel(object):
     def ngrams(self):
         n = self._n
         for sample in self._samples:
-            for i in xrange(len(sample)-n+1):
+            for i in range(len(sample)-n+1):
                 yield sample[i:i+n]
 
     def unique_ngrams(self):
@@ -130,5 +130,5 @@ def load_dataset(path, max_length, tokenize=False, max_vocab_size=2048):
     # for i in xrange(100):
     #     print filtered_lines[i]
 
-    print "loaded {} lines in dataset".format(len(lines))
+    print("loaded {} lines in dataset".format(len(lines)))
     return filtered_lines, charmap, inv_charmap

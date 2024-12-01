@@ -77,7 +77,7 @@ def Batchnorm(name, axes, inputs, is_training=None, stats_iter=None, update_movi
         mean, var = tf.nn.moments(inputs, axes, keep_dims=True)
         shape = mean.get_shape().as_list()
         if 0 not in axes:
-            print "WARNING ({}): didn't find 0 in axes, but not using separate BN params for each item in batch".format(name)
+            print("WARNING ({}): didn't find 0 in axes, but not using separate BN params for each item in batch".format(name))
             shape[0] = 1
         offset = lib.param(name+'.offset', np.zeros(shape, dtype='float32'))
         scale = lib.param(name+'.scale', np.ones(shape, dtype='float32'))

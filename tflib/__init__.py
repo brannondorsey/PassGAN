@@ -34,13 +34,13 @@ def param(name, *args, **kwargs):
     return result
 
 def params_with_name(name):
-    return [p for n,p in _params.items() if name in n]
+    return [p for n,p in list(_params.items()) if name in n]
 
 def delete_all_params():
     _params.clear()
 
 def alias_params(replace_dict):
-    for old,new in replace_dict.items():
+    for old,new in list(replace_dict.items()):
         # print "aliasing {} to {}".format(old,new)
         _param_aliases[old] = new
 
@@ -99,16 +99,16 @@ def delete_param_aliases():
 #     )
 
 def print_model_settings(locals_):
-    print "Uppercase local vars:"
-    all_vars = [(k,v) for (k,v) in locals_.items() if (k.isupper() and k!='T' and k!='SETTINGS' and k!='ALL_SETTINGS')]
+    print("Uppercase local vars:")
+    all_vars = [(k,v) for (k,v) in list(locals_.items()) if (k.isupper() and k!='T' and k!='SETTINGS' and k!='ALL_SETTINGS')]
     all_vars = sorted(all_vars, key=lambda x: x[0])
     for var_name, var_value in all_vars:
-        print "\t{}: {}".format(var_name, var_value)
+        print("\t{}: {}".format(var_name, var_value))
 
 
 def print_model_settings_dict(settings):
-    print "Settings dict:"
-    all_vars = [(k,v) for (k,v) in settings.items()]
+    print("Settings dict:")
+    all_vars = [(k,v) for (k,v) in list(settings.items())]
     all_vars = sorted(all_vars, key=lambda x: x[0])
     for var_name, var_value in all_vars:
-        print "\t{}: {}".format(var_name, var_value)
+        print("\t{}: {}".format(var_name, var_value))

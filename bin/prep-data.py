@@ -12,7 +12,7 @@ with open('../data/rockyou-full.txt', 'r') as f:
 
     # filter only passwords with 10 characters or fewer
     print('[info] filtering rockyou to include only 10 character or less passwords')
-    lines = filter(lambda x: len(x) <= 10, lines)
+    lines = [x for x in lines if len(x) <= 10]
 
     # randomize order
     print('[info] shuffling rockyou')
